@@ -94,6 +94,6 @@ document.getElementById("addForm").reset();
 document.getElementById("id").focus();
 
 // UPDATE THE COUNTER
-empCount.value = (rowCount - 1)
+empCount.value = (rowCount)
 
 });   
