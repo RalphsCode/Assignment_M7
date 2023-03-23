@@ -1,30 +1,27 @@
-// ADD EMPLOYEE
-// form.addEventListener('submit', (e) => {
-
-
-
-
-
-// })
-
-// DELETE EMPLOYEE
-
 //  Ralph Godkin
 //  COMP 690 - Module 7 Assignment
 //  ===============================
 
 // GET ADD EMPLOYEE FORM AND EMPLOYEE TABLE FROM THE DOM
 
-const myForm = document.getElementById('addForm');                           // Creates the variable myForm from the HTML form
-
-// SET A COUNT VARIABLE TO DISPLAY NEXT TO EMPLOYEES HEADER
-let empCount = document.getElementById("empCount")
+const addEmpTable = document.getElementById("addForm");                           // Creates the variable myForm from the HTML form
+const empTable = document.getElementById("employees");
 
 // GET THE VALUES FROM THE TEXT BOXES
-myForm.addEventListener('submit', (e) => {                                  // JS listens for the Submit btn to be clicked
+addEmpTable.addEventListener('submit', (e) => {                                  // JS listens for the Submit btn to be clicked
 
     // PREVENT FORM SUBMISSION
-    e.preventDefault();                                                     // Stop the submit from taking on browser default functions
+    e.preventDefault();    
+
+// SET A COUNT VARIABLE TO DISPLAY NEXT TO EMPLOYEES HEADER
+        let empCount = empTable.getElementsByTagName("tr").length;
+        console.log(`Number of TR's currently: ${empCount}`)
+        let counter = document.getElementById("empCount");
+        counter.textContent = empCount;    
+        console.log("Row Count: " + empCount ) 
+
+
+                                                       // Stop the submit from taking on browser default functions
         let id = document.getElementById("id").value                        // The arrow function dictates what to do with the form
         let empName = document.getElementById("name").value
         let ext = document.getElementById("extension").value                      // Retrieve the HTML for entries and assign them to variables
@@ -33,17 +30,10 @@ myForm.addEventListener('submit', (e) => {                                  // J
     console.log("ID: " + id + "\nName: " + empName + "\nExtension: " + ext + "\nemail: " + email + "\nDepartment: " + department);
                                                                       // The retrieved HTML form contents are presented
     
-       // Get a reference to the table
-    const table = document.querySelector('table');
-  
-    // INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE 
-    var rowCount = table.rows.length;
-    console.log("Row Count: " + (rowCount -1))
-
     
 // INSERT A CELL FOR EACH ITEM WITHIN THE NEW ROW
     let newRow = document.createElement('tr')
-    newRow.setAttribute("rowCount", rowCount);
+    newRow.setAttribute("rowCount", empCount);
     let newCell1 = document.createElement('td')
     let newCell2 = document.createElement('td')    
     let newCell3 = document.createElement('td')
@@ -77,23 +67,21 @@ myForm.addEventListener('submit', (e) => {                                  // J
 
     
 // INSERT A NEW ROW AT THE END OF THE EMPLOYEES TABLE
-    table.appendChild(newRow);
+    empTable.appendChild(newRow);
 
 // REMOVE THE SELECTED TR 
-    empTable = document.getElementById("employees")
         empTable.addEventListener('click', (e) => {
-        console.log(`This is the row I'm in as I delete: ${rowCount}`)
-        var i = e.rowIndex;
-        document.getElementById("empTable").deleteRow(i);
+        console.log(`This is the row I'm in as I delete: ${empCount}`)
+        empTable.deleteRow(empCount - 1);
          })
 
 // RESET THE FORM
-document.getElementById("addForm").reset();
+// document.getElementById("addForm").reset();
 
 // SET FOCUS BACK TO THE ID TEXT BOX
 document.getElementById("id").focus();
 
 // UPDATE THE COUNTER
-empCount.value = (rowCount)
+empCount = (empCount + 1);
 
 });   
