@@ -2,33 +2,33 @@
 //  COMP 690 - Module 7 Assignment
 //  ===============================
 
-// GET ADD EMPLOYEE FORM AND EMPLOYEE TABLE FROM THE DOM
+// GET ADD EMPLOYEE FORM TABLE AND EMPLOYEE LIST TABLE FROM THE DOM
 
-const addEmpTable = document.getElementById("addForm");                         // Creates the variable myForm from the HTML form
+const addEmpTable = document.getElementById("addForm"); 
 const empTable = document.getElementById("employees");
 
 // GET THE VALUES FROM THE TEXT BOXES
-    addEmpTable.addEventListener('submit', (e) => {                             // JS listens for the Submit btn to be clicked
+    addEmpTable.addEventListener('submit', (e) => {                             // LISTENS FOR SUBMIT BUTTON TO BE CLICKED
 
 // PREVENT FORM SUBMISSION
-    e.preventDefault();                                                         // Stop the submit from taking on browser default functions
+    e.preventDefault();                                                         // PREVENT BROWSER DEFAULT EVENTS
 
-// SET A COUNT VARIABLE TO DISPLAY NEXT TO EMPLOYEES HEADER
+// CREATE A COUNT FUNCTION TO DISPLAY NEXT TO EMPLOYEES HEADER
+function empCountFunction() {                                                   // FUNCTION TO KEEP RUNNING COUNT OF EMPLOYEES 
         let empCount = empTable.getElementsByTagName("tr").length;
-        console.log(`Number of TR's currently: ${empCount}`)
         let n = document.getElementById("empCount");
-        n.textContent = empCount;    
+        n.textContent = (empCount - 1);    
+        }
 
 // GET THE INFORMATION ENTERED INTO THE FORM BY THE USER
-        let id = document.getElementById("id").value                        // The arrow function dictates what to do with the form
+        let id = document.getElementById("id").value
         let empName = document.getElementById("name").value
-        let ext = document.getElementById("extension").value                      // Retrieve the HTML for entries and assign them to variables
-        let email = document.getElementById("email").value                  // variables are within the function
+        let ext = document.getElementById("extension").value
+        let email = document.getElementById("email").value
         let department = document.getElementById("department").value
     
-// INSERT A CELL FOR EACH ITEM WITHIN THE NEW ROW
+// CREATE A new tr AND A td FOR EACH ITEM WITHIN THE ROW
         let newRow = document.createElement('tr')
-        newRow.setAttribute("rowCount", empCount);
         let newCell1 = document.createElement('td')
         let newCell2 = document.createElement('td')    
         let newCell3 = document.createElement('td')
@@ -36,7 +36,7 @@ const empTable = document.getElementById("employees");
         let newCell5 = document.createElement('td')
         let newCell6 = document.createElement('td')
 
-// INSERT THE EMPLOYEE DETAILS INTO THE CELLS/td's
+// INSERT THE EMPLOYEE DETAILS INTO THE td's
         newCell1.textContent = id ;
         newCell2.textContent = empName ;
         newCell3.textContent = ext ;
@@ -45,7 +45,7 @@ const empTable = document.getElementById("employees");
   
 // CREATE THE DELETE BUTTON
         let deleteBtn = document.createElement('button')
-// ADD BOOTSTRAP CLASSES FOR A BUTTON
+// ADD BOOTSTRAP CLASSES FOR THE BUTTON
         deleteBtn.className = 'btn btn-danger btn-sm float-right delete'
 // CREATE TEXT NODE FOR DELETE BUTTON AND SET IT TO 'X'
         let textDelete = document.createTextNode('X')
@@ -63,18 +63,25 @@ const empTable = document.getElementById("employees");
 // INSERT THE NEW ROW AT THE BOTTOM OF THE EMPLOYEES TABLE
     empTable.appendChild(newRow);
 
-// REMOVE THE SELECTED TR 
-        empTable.addEventListener('click', (e) => {
-        console.log(`This is the row I'm in as I delete: ${empCount}`)
-        let rowNumber = 1
-        empTable.deleteRow(rowNumber);
-         })
+// CALL THE FUNCTION TO DISPLAY THE NUMBER OF EMPLOYEES
+    empCountFunction();                                                         // DISPLAY THE NUMBER OF EMPLOYEES
+
+// DELETE THE ROW (EMPLOYEE) TO BE REMOVED 
+        deleteBtn.addEventListener('click', (e) => {
+        if (confirm('Are you sure you want to delete this employee?')) {        // USER CONFIRMS WHETHER OR NOT TO DELETE EMPLOYEE
+            var getRow = deleteBtn.parentNode; 
+            getRow.parentNode.removeChild(getRow); 
+// UPDATE THE EMPLOYEE COUNT IN THE TABLE HEADER TO REFLECT A DELETED EMPLOYEE
+            empCountFunction();                                                 // UPDATE THE NUMBER OF EMPLOYEES
+          }
+        })
 
 // RESET THE FORM
-//      document.getElementById("addForm").reset();
+     document.getElementById("addForm").reset();
 
 // SET FOCUS BACK TO THE ID TEXT BOX
         document.getElementById("id").focus();
 
-        return;
 });   
+
+// =================  END  =======================
